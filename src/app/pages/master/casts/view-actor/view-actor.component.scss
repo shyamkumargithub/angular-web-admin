@@ -120,3 +120,16 @@
     }
   }
 }
+.media-card {
+  position: relative;
+}
+
+.delete-button {
+  position: absolute;
+  top: 4px;
+  color: red;
+  right: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  z-index: 10;
+}

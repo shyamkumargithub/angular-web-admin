@@ -59,7 +59,7 @@ onFileChange(event: any, field: 'thumbnail' | 'file'): void {
         return;
       }
     } else if (this.data.type === 'VIDEO') {
-      maxSize = 10 * 1024 * 1024; // 10MB
+      maxSize = 50 * 1024 * 1024; // 10MB
       if (!file.type.startsWith('video/')) {
         this._snackBar.open('Only video files are allowed', 'Close', { duration: 3000 });
         return;

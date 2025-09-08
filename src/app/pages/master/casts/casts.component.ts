@@ -227,6 +227,7 @@ getVideoCount(galleries: any[]): number {
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
       console.log('Cast Created:', result);
+      this.getAllCast();
     }
   });
   }

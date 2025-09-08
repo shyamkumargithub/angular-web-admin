@@ -13,7 +13,7 @@ interface VideoMetadata extends MediaMetadata {
   subTitle: string | null;
 }
 
-type FileType = "IMAGE" | "VIDEO";
+type FileType = "IMAGE" | "VIDEO"|"VIDEO_ACTOR"|"IMAGE_ACTOR";
 
 export interface MediaFile {
   id: number;

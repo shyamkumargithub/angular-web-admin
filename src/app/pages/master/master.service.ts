@@ -92,6 +92,17 @@ export class MasterService {
     );
   }
 
+    deleteActorMediaGallery(id: string): Observable<{ id: number }> {
+    return this.http.delete<{ id: number }>(
+      `${environment.server}/private/api/actors/${id}/gallery`,
+      {
+         headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem(environment.access_token),
+        }),
+      }
+    );
+  }
+
   addActorImage(id:number,formData: FormData): Observable<any> {
     return this.http.post<MediaFile>(
       environment.server + `/private/api/actors/${id}/gallery/images`,
@@ -134,7 +145,7 @@ export class MasterService {
       {
         headers: new HttpHeaders({
           Authorization: localStorage.getItem(environment.access_token),
-          'Content-Type': 'application/json'
+          
         })
       }
     );
@@ -147,7 +158,7 @@ export class MasterService {
       {
         headers: new HttpHeaders({
           Authorization: localStorage.getItem(environment.access_token),
-          'Content-Type': 'application/json'
+          
         })
       }
     );
