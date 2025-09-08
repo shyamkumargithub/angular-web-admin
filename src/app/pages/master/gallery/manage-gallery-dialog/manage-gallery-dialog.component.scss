@@ -1,0 +1,106 @@
+// manage-gallery-dialog.component.scss
+.dialog-title {
+    font-weight: 500;
+    margin: 0;
+}
+
+.dialog-body {
+    padding: 20px 20px;
+    min-height: 400px;
+}
+
+.section-label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 500;
+}
+
+.file-upload-container {
+    margin-bottom: 24px;
+}
+
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+    margin-bottom: 16px;
+    
+    &:hover {
+        border-color: #3f51b5;
+        background-color: rgba(63, 81, 181, 0.04);
+        cursor: pointer;
+    }
+    
+    .upload-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        color: #ccc;
+        margin-bottom: 8px;
+    }
+    
+    p {
+        margin: 0;
+        color: rgba(0, 0, 0, 0.6);
+    }
+    
+    .file-info {
+        font-size: 12px;
+        margin-top: 4px;
+    }
+}
+
+.preview-area {
+    position: relative;
+    margin-bottom: 16px;
+    
+    .thumbnail-preview, .file-preview {
+        width: 100%;
+        max-height: 200px;
+        object-fit: contain;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+    
+    .file-info-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        
+        .file-icon {
+            font-size: 48px;
+            width: 48px;
+            height: 48px;
+            color: #757575;
+            margin-bottom: 8px;
+        }
+        
+        .file-name {
+            margin: 0;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.87);
+            word-break: break-all;
+            text-align: center;
+        }
+    }
+    
+    .preview-actions {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 4px;
+        padding: 4px;
+    }
+}
+
+.dialog-actions {
+    padding: 16px;
+    margin: 0;
+}

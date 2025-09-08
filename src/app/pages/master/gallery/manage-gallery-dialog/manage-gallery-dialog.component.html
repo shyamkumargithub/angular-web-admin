@@ -1,0 +1,118 @@
+<!-- manage-gallery-dialog.component.html -->
+<h2 mat-dialog-title class="dialog-title">
+    {{ data.title }}
+</h2>
+<mat-divider></mat-divider>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="dialog-body" fxLayout="column" mat-dialog-content>
+   
+   <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Category</mat-label>
+         <mat-select formControlName="category">
+            <mat-option  value="Timeline">Timeline</mat-option>
+            <mat-option  value="Movie">Movie</mat-option>
+        </mat-select>
+                          
+    </mat-form-field>
+    <!-- Caption Field -->
+    <mat-form-field appearance="outline" fxFlex="1 1 100%">
+        <mat-label>Caption</mat-label>
+        <textarea matInput formControlName="caption" placeholder="Enter image caption" rows="3"></textarea>
+        <mat-error *ngIf="form.get('caption')?.hasError('maxlength')">
+            Caption cannot exceed 200 characters
+        </mat-error>
+    </mat-form-field>
+    
+
+    <!-- Thumbnail Field -->
+    <div fxFlex="1 1 100%" fxLayout="column">
+        <label class="section-label">Thumbnail</label>
+        <div class="file-upload-container" fxLayout="column">
+            <!-- File upload area -->
+            <div class="upload-area" 
+                 *ngIf="!thumbnailPreview && !form.get('thumbnail')?.value"
+                 (click)="thumbnailInput.click()">
+                <mat-icon class="upload-icon">cloud_upload</mat-icon>
+                <p>Click to upload thumbnail</p>
+                <p class="file-info">Max size: 2MB • Formats: JPG, PNG, WebP</p>
+            </div>
+
+            <!-- Preview area -->
+            <div class="preview-area" *ngIf="thumbnailPreview || form.get('thumbnail')?.value">
+                <img [src]="thumbnailPreview || form.get('thumbnail')?.value" alt="Thumbnail preview" class="thumbnail-preview">
+                <div class="preview-actions">
+                    <button mat-icon-button color="primary" (click)="thumbnailInput.click()" matTooltip="Change thumbnail">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="removeThumbnail()" matTooltip="Remove thumbnail">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hidden file input -->
+            <input #thumbnailInput type="file" accept="image/jpeg,image/png,image/webp" (change)="onThumbnailSelected($event)" style="display: none;">
+            
+            <!-- Error message -->
+            <mat-error *ngIf="form.get('thumbnail')?.hasError('fileSize')">
+                Thumbnail size must be less than 2MB
+            </mat-error>
+            <mat-error *ngIf="form.get('thumbnail')?.hasError('fileType')">
+                Only JPG, PNG, and WebP formats are allowed for thumbnails
+            </mat-error>
+        </div>
+    </div>
+
+    <!-- File Field -->
+    <div fxFlex="1 1 100%" fxLayout="column">
+        <label class="section-label">Main File</label>
+        <div class="file-upload-container" fxLayout="column">
+            <!-- File upload area -->
+            <div class="upload-area" 
+                 *ngIf="!filePreview && !form.get('file')?.value"
+                 (click)="fileInput.click()">
+                <mat-icon class="upload-icon">cloud_upload</mat-icon>
+                <p>Click to upload main file</p>
+                <p class="file-info">Max size: 10MB • Formats: JPG, PNG, WebP, PDF, ZIP</p>
+            </div>
+
+            <!-- Preview area -->
+            <div class="preview-area" *ngIf="filePreview || form.get('file')?.value">
+                <div *ngIf="isImageFile(form.get('file')?.value)" class="image-preview-container">
+                    <img [src]="filePreview || form.get('file')?.value" alt="File preview" class="file-preview">
+                </div>
+                <div *ngIf="!isImageFile(form.get('file')?.value)" class="file-info-preview">
+                    <mat-icon class="file-icon">description</mat-icon>
+                    <p class="file-name">{{getFileName(form.get('file')?.value)}}</p>
+                </div>
+                <div class="preview-actions">
+                    <button mat-icon-button color="primary" (click)="fileInput.click()" matTooltip="Change file">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="removeFile()" matTooltip="Remove file">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hidden file input -->
+            <input #fileInput type="file" accept="image/jpeg,image/png,image/webp,application/pdf,application/zip" (change)="onFileSelected($event)" style="display: none;">
+            
+            <!-- Error message -->
+            <mat-error *ngIf="form.get('file')?.hasError('fileSize')">
+                File size must be less than 10MB
+            </mat-error>
+            <mat-error *ngIf="form.get('file')?.hasError('fileType')">
+                Only JPG, PNG, WebP, PDF, and ZIP formats are allowed
+            </mat-error>
+        </div>
+    </div>
+</form>
+
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button color="basic" (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" type="submit" (click)="onSubmit()" [disabled]="form.invalid">
+        {{ data.action === 'UPDATE' ? 'Save Changes' : 'Create' }}
+    </button>
+</mat-dialog-actions>

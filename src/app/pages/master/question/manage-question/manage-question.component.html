@@ -1,0 +1,104 @@
+<h2 mat-dialog-title>
+  <mat-icon class="mr-2">help_outline</mat-icon>
+  {{ data.defaultValues ? "Edit Question" : "Create New Question" }}
+</h2>
+
+<mat-dialog-content [formGroup]="form" class="dialog-content">
+
+  <!-- Question -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Question</mat-label>
+    <input matInput formControlName="text" placeholder="Enter your question here" />
+    <mat-error *ngIf="form.get('text')?.invalid">Question is required</mat-error>
+  </mat-form-field>
+
+  <!-- Category -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('category')?.invalid">Category is required</mat-error>
+  </mat-form-field>
+
+  <!-- Options -->
+<!-- Options -->
+<!-- Options -->
+<div class="options-section" formArrayName="options">
+  <label class="section-label">Options</label>
+
+  <div *ngFor="let opt of options.controls; let i = index" class="option-row">
+    <!-- Radio group stays OUTSIDE the formArray -->
+    <mat-radio-button
+      [value]="i"
+      [checked]="form.get('correctOptionIndex')?.value === i"
+      (change)="form.get('correctOptionIndex')?.setValue(i)"
+      class="mr-2">
+    </mat-radio-button>
+
+    <mat-form-field appearance="outline" class="flex-1">
+      <mat-label>Option {{ 'ABCD'[i] }}</mat-label>
+      <input matInput [formControlName]="i" />
+      <mat-error *ngIf="opt.invalid">Required</mat-error>
+    </mat-form-field>
+
+    <mat-icon *ngIf="form.get('correctOptionIndex')?.value === i" color="primary">
+      check_circle
+    </mat-icon>
+  </div>
+</div>
+
+
+
+<!-- Audio Upload -->
+<div class="audio-upload">
+  <label class="section-label">Voice</label>
+
+  <!-- Hidden Input -->
+  <input
+    id="audio-input"
+    type="file"
+    accept="audio/*"
+    (change)="onFileSelected($event)"
+    hidden
+  />
+
+  <div class="upload-card" (click)="!audioPreview && triggerFileInput()">
+    <ng-container *ngIf="!audioPreview; else previewBlock">
+      <mat-icon>upload_file</mat-icon>
+      <p>Click to upload audio</p>
+      <p class="hint">Allowed: mp3, wav, ogg, mpeg</p>
+      <p class="hint">Max size: 20 MB</p>
+    </ng-container>
+
+    <!-- Preview -->
+    <ng-template #previewBlock>
+      <div class="preview-block">
+        <audio [src]="audioPreview" controls class="w-full"></audio>
+        <button mat-stroked-button color="primary" type="button" (click)="triggerFileInput()">
+          Replace File
+        </button>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Required Error (only in create mode) -->
+  <mat-error *ngIf="form.get('audio')?.hasError('required') && form.get('audio')?.touched">
+    Audio is required
+  </mat-error>
+
+  <!-- Validation Error -->
+  <div *ngIf="errorMessage" class="error-message">
+    <mat-icon color="warn">error</mat-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
+</div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">
+    {{ data.defaultValues ? "Update Question" : "Create Question" }}
+  </button>
+</mat-dialog-actions>

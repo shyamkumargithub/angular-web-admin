@@ -1,0 +1,38 @@
+<form [formGroup]="searchForm">
+  <mat-form-field appearance="outline" style="width: 100%;" [floatLabel]="'always'">
+    <mat-label>Search {{ label }}</mat-label>
+
+    <!-- Close or Search Icon -->
+    <mat-icon matSuffix style="padding: 0px !important; cursor: pointer; font-size: 20px;" [disabled]="isDisabled"
+      *ngIf="(searchForm.get('searchQuery')?.value?.length > 0 && !isLoading) && !isDisabled" (click)="clearSearch()">close</mat-icon>
+
+    <mat-icon matSuffix style="padding: 0px !important; font-size: 20px;"
+      *ngIf="searchForm.get('searchQuery')?.value?.length === 0">search</mat-icon>
+
+
+    <!-- Input Field -->
+    <div fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="space-between center">
+      <input type="text" matInput [matAutocomplete]="searchAuto" placeholder="{{ label }}"
+        (input)="searchItem($event.target.value)" formControlName="searchQuery" (blur)="handleBlur()" [disabled]="isDisabled"
+        [required]="required">
+      <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+    </div>
+
+    <!-- Autocomplete Dropdown -->
+    <mat-autocomplete #searchAuto="matAutocomplete" (optionSelected)="onOptionSelected($event.option.value)">
+      <mat-option *ngIf="filteredOptions?.length === 0 && (selectedvalue==null||selectedvalue=='')" [disabled]="true">
+        No {{ label }} found
+      </mat-option>
+      <mat-option *ngFor="let item of filteredOptions" [value]="item">
+        <div fxFlex fxLayout="column" style="margin-bottom: 10px;">
+          <span fxFlex>{{ item[displayProperty] }}</span>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+
+    <!-- Error Message (conditionally shown) -->
+    <mat-error *ngIf="required && searchForm.get('searchQuery')?.touched && searchForm.get('searchQuery')?.invalid && searchForm.get('searchQuery')?.hasError('required')">
+      {{ label }} is required
+    </mat-error>
+  </mat-form-field>
+</form>

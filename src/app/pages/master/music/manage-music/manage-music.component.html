@@ -1,0 +1,87 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title>{{ data.title }}</h1>
+
+  <mat-dialog-content>
+    <form [formGroup]="musicForm" class="music-form">
+
+      <!-- Title -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title">
+        <mat-error *ngIf="musicForm.get('title')?.hasError('required')">Title is required</mat-error>
+      </mat-form-field>
+
+      <!-- Genre -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Genre</mat-label>
+        <mat-select formControlName="genre">
+          <mat-option *ngFor="let genre of metaData?.genres" [value]="genre">{{ genre }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="musicForm.get('genre')?.hasError('required')">Genre is required</mat-error>
+      </mat-form-field>
+
+      <!-- Year -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Year</mat-label>
+        <mat-select formControlName="year">
+          <mat-option *ngFor="let year of metaData?.releaseYears" [value]="year">{{ year }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Language -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Language</mat-label>
+        <mat-select formControlName="language">
+          <mat-option *ngFor="let lang of metaData?.languages" [value]="lang">{{ lang }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="musicForm.get('language')?.hasError('required')">Language is required</mat-error>
+      </mat-form-field>
+
+      <!-- Artist -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Artist</mat-label>
+        <mat-select formControlName="artist">
+          <mat-option *ngFor="let singer of metaData?.singers" [value]="singer">{{ singer }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+     <!-- Thumbnail Upload -->
+<div class="upload-card" (click)="thumbnailInput.click()">
+  <input type="file" #thumbnailInput hidden accept="image/*" (change)="onThumbnailSelected($event)">
+
+  <ng-container *ngIf="thumbnailPreview; else thumbnailPlaceholder">
+    <!-- stopPropagation here -->
+    <img [src]="thumbnailPreview" class="preview-img" (click)="$event.stopPropagation()">
+  </ng-container>
+
+  <ng-template #thumbnailPlaceholder>
+    <p>Click to upload thumbnail (JPG/PNG, Max 2MB)</p>
+  </ng-template>
+</div>
+
+<!-- Audio Upload -->
+<div class="upload-card" (click)="fileInput.click()">
+  <input type="file" #fileInput hidden accept="audio/*" (change)="onFileSelected($event)">
+
+  <ng-container *ngIf="audioPreview; else audioPlaceholder">
+    <!-- stopPropagation here -->
+    <audio controls [src]="audioPreview" (click)="$event.stopPropagation()"></audio>
+  </ng-container>
+
+  <ng-template #audioPlaceholder>
+    <p>Click to upload audio (MP3/WAV, Max 10MB)</p>
+  </ng-template>
+</div>
+
+      <mat-error *ngIf="musicForm.get('file')?.hasError('required')">Audio file is required</mat-error>
+
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()">
+      {{ data.action === "UPDATE" ? "Update" : "Create" }}
+    </button>
+  </mat-dialog-actions>
+</div>

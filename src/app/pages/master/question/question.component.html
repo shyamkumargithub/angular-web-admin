@@ -1,0 +1,100 @@
+<fury-page-layout mode="card" style="padding-top: 16px;">
+    <fury-page-layout-content>
+        <fury-card-content>
+
+            <div style="margin-top: 16px;" fxLayout="row" fxLayoutAlign="space-between center">
+                <form [formGroup]="form" class="filter-container" fxLayout="row wrap" fxLayoutGap="16px"
+                    fxLayoutAlign="start center">
+
+                    <!-- Search Input -->
+                    <div>
+                        <mat-form-field appearance="outline" fxFlex.xs="100%" fxFlex.sm="45%" fxFlex.md="30%">
+                            <mat-label>Search</mat-label>
+                            <input matInput formControlName="key" placeholder="Search...">
+                        </mat-form-field>
+                    </div>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Category</mat-label>
+                            <mat-select formControlName="category">
+                            <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
+                            </mat-select>
+                          
+                        </mat-form-field>
+                 
+
+
+
+                </form>
+                <div>
+                    <button (click)="openCreateDialog()" type="button" mat-mini-fab color="primary">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+            </div>
+            <ng-template #firstPosTemplate let-row let-i="index">
+                {{ i + 1 + (page * size) }}.
+            </ng-template>
+
+<ng-template #optionsTemplate let-row let-i="index">
+  <div class="options-list">
+    <div
+      *ngFor="let item of row.options; let j = index"
+      class="flex items-center mb-1"
+      [ngClass]="{
+        'text-primary font-bold': j === row.correctOptionIndex,
+        'text-gray-700': j !== row.correctOptionIndex
+      }"
+    >
+      <!-- Option label -->
+      <span class="mr-2">{{ item }}</span>
+
+      <!-- Show check icon only for correct option -->
+      <mat-icon *ngIf="j === row.correctOptionIndex" color="primary" class="ml-1">
+        check_circle
+      </mat-icon>
+    </div>
+  </div>
+</ng-template>
+
+
+            <ng-template #actionsTemplate let-row>
+                <ng-container>
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu"
+                        (click)="$event.stopPropagation()">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+
+                    <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                     
+                        <button mat-menu-item (click)="openUpdateDialog(row)">
+                            <mat-icon>edit</mat-icon>
+                            Edit
+                        </button>
+
+                        <button mat-menu-item (click)="delete(row)">
+                           
+                            <span fxLayoutAlign="start center"
+                                ><mat-icon>delete</mat-icon><span>Delete</span></span>
+                        </button>
+                    </mat-menu>
+                </ng-container>
+            </ng-template>
+            <!-- Expansion Template -->
+            <ng-template #imageTemplate let-row style="justify-items: center;">
+               
+               
+    <img [src]="baseUrl + row.thumbnail"
+           alt="item image"
+           width="50"
+           height="50"
+           style="border-radius: 8px;" />
+            </ng-template>
+            <shared-data-table noDataLabel="No question found" [columns]="displayedColumns" [data]="questionList" [usePaginator]="true"
+                [pageSize]="size" [pageSizeOptions]="pageSizeList" [totalRecords]="recordCount"
+                (pageChange)="onPageChange($event)">
+            </shared-data-table>
+        </fury-card-content>
+    </fury-page-layout-content>
+
+</fury-page-layout>

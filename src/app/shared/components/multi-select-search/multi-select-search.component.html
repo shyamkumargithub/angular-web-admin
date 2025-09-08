@@ -1,0 +1,58 @@
+<div style="position: relative;" fxFlex="1 1 100%">
+  <form [formGroup]="searchForm">
+    <mat-form-field appearance="outline" fxFlex="1 1 100%">
+      <mat-label>{{ label }}</mat-label>
+      <input matInput placeholder="{{ label }}" [readonly]="true" formControlName="searchQuery"
+        (click)="toggleCardVisibility()">
+          <mat-error *ngIf="required && searchForm.get('searchQuery')?.hasError('required')">
+            {{ label }} is required
+          </mat-error>
+    </mat-form-field>
+  </form>
+
+  <div *ngIf="isCardVisible" class="card-container scrollable-card mat-elevation-z2">
+    <mat-chip-list aria-label="Selected items">
+      <mat-chip *ngFor="let selectedItem of selectedItems" (removed)="clearSelectedItem(selectedItem)"
+        style="margin: 3px;">
+      <!-- If selectedItem is a string, display it directly -->
+      <ng-container *ngIf="isString(selectedItem); else objectDisplay">
+        {{ selectedItem }}
+      </ng-container>
+      
+      <!-- If selectedItem is an object, display the specified property -->
+      <ng-template #objectDisplay>
+        {{ selectedItem[displayProperty] }}
+      </ng-template>
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </mat-chip-list>
+    <p *ngIf="selectedItems.length === 0">No items selected.</p>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>Search {{ label }}</mat-label>
+      <input matInput placeholder="Search {{ label }}"  #searchInput
+        (input)="searchItem($event.target.value)">
+      <mat-spinner *ngIf="isSearching" matSuffix diameter="20"></mat-spinner>
+      <mat-icon *ngIf="inputSearch?.length > 0 && !isSearching" matSuffix (click)="clearSearch($event)">close</mat-icon>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <mat-checkbox *ngIf="filteredItems.length > 0" [(ngModel)]="isAllSelected" (change)="toggleSelectAll()">
+      {{ isAllSelected ? 'Deselect All' : 'Select All' }}
+    </mat-checkbox>
+
+  <mat-selection-list (selectionChange)="onSelectionChange($event)">
+    <mat-list-option *ngFor="let item of filteredItems" [value]="item" [selected]="isItemSelected(item)"
+      [disabled]="isSelectionDisabled(item)">
+      {{ item[displayProperty] }}
+    </mat-list-option>
+  </mat-selection-list>
+
+    <p *ngIf="filteredItems.length === 0 && searchQuery">No results found.</p>
+  </div>
+</div>

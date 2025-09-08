@@ -1,0 +1,61 @@
+<!-- user-profile-dialog.component.html -->
+<div class="user-profile-dialog">
+  <!-- Header section with close button -->
+  <div mat-dialog-title class="dialog-header">
+    <h2 class="username">{{ data.info.username }}</h2>
+    <button mat-icon-button class="close-button" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Dialog content -->
+  <div mat-dialog-content class="dialog-content">
+    <!-- Profile section -->
+    <div class="profile-section">
+      <img [src]="baseUrl + data?.profile?.thumbnail" [alt]="data.info.username" class="profile-photo">
+      
+      <!-- Multi-paragraph about section -->
+      <div class="about-section">
+        <h3>About</h3>
+        <p>{{ data.info.about }}</p>
+      </div>
+    </div>
+
+    <!-- Image card list -->
+    <div class="media-section" *ngIf="images.length">
+      <h3>Images</h3>
+      <div class="media-grid">
+        <mat-card *ngFor="let imageItem of images; trackBy: trackByMediaId" class="media-card">
+          <img mat-card-image [src]="baseUrl + imageItem?.thumbnail" [alt]="imageItem.imageMetadata.caption">
+          <mat-card-content>
+            <p>{{imageItem.imageMetadata.caption }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Video card list -->
+    <div class="media-section" *ngIf="videos.length">
+      <h3>Videos</h3>
+      <div class="media-grid">
+        <mat-card *ngFor="let video of videos; trackBy: trackByMediaId" class="media-card">
+         <!-- <img mat-card-image [src]="baseUrl + video?.thumbnail" [alt]="video.videoMetadata.caption"> -->
+         <video controls autoplay>
+      <source [src]="baseUrl + video?.url"  type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+          <mat-card-content>
+            <p>{{ video.videoMetadata.caption}}</p>
+          </mat-card-content>
+         
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog actions -->
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button (click)="onClose()">Close</button>
+   
+  </div>
+</div>

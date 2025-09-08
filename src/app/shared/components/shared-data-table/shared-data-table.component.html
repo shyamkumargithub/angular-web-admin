@@ -1,0 +1,33 @@
+<div >
+    <table mat-table [dataSource]="data" *ngIf="data?.length > 0; else noDataTemplate">
+        <ng-container *ngFor="let column of columns">
+            <ng-container *ngIf="column.visible">
+                <ng-container [matColumnDef]="column.property">
+                    <th mat-header-cell *matHeaderCellDef>{{ column.name }}</th>
+                    <td mat-cell *matCellDef="let row;let i=index">
+                        <ng-container *ngIf="column.cellTemplate; else defaultCell">
+                            <ng-container
+                                *ngTemplateOutlet="column.cellTemplate; context: { $implicit: row,index:i }"></ng-container>
+                        </ng-container>
+                        <ng-template #defaultCell>{{ getNestedValue(row, column) }}</ng-template>
+                    </td>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"
+            style="background-color: rgb(245, 245, 245); border-top: 1px solid #ddd;"></tr>
+        <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns"></tr>
+    </table>
+     <ng-template #noDataTemplate>
+    <div class="no-data-label">
+      {{ noDataLabel }}
+    </div>
+  </ng-template>
+    <mat-divider></mat-divider>
+
+    <mat-paginator *ngIf="usePaginator" [length]="totalRecords" [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+    </mat-paginator>
+</div>

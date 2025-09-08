@@ -1,0 +1,84 @@
+<fury-page-layout mode="card" style="padding-top: 16px;">
+    <fury-page-layout-content>
+        <fury-card-content>
+
+            <div style="margin-top: 16px;" fxLayout="row" fxLayoutAlign="space-between center">
+                <form [formGroup]="form" class="filter-container" fxLayout="row wrap" fxLayoutGap="16px"
+                    fxLayoutAlign="start center">
+
+                    <!-- Search Input -->
+                    <div>
+                        <mat-form-field appearance="outline" fxFlex.xs="100%" fxFlex.sm="45%" fxFlex.md="30%">
+                            <mat-label>Search</mat-label>
+                            <input matInput formControlName="key" placeholder="Search...">
+                        </mat-form-field>
+                    </div>
+
+
+
+
+
+                </form>
+                <div>
+                    <button (click)="openCreateDialog()" type="button" mat-mini-fab color="primary">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+            </div>
+            <ng-template #firstPosTemplate let-row let-i="index">
+                {{ i + 1 + (page * size) }}.
+            </ng-template>
+
+            <ng-template #profileTemplate let-row style="justify-items: center;">
+                <img [src]="baseUrl + row?.profile?.thumbnail" alt="profile" width="50" height="50"
+                    style="border-radius: 30px;" />
+            </ng-template>
+
+             <ng-template #aboutTemplate let-row style="justify-items: center;" class="truncate-two-lines">
+               <span class="truncate-two-lines">{{ row?.info?.about }}</span>
+            </ng-template>
+            <ng-template #imageCountTemplate let-row style="justify-items: center;">
+             <span>{{ getImageCount(row.galleries) }}</span>
+            </ng-template>
+                <ng-template #videoCountTemplate let-row style="justify-items: center;">
+              <span>{{ getVideoCount(row.galleries) }}</span>
+                </ng-template>
+    
+
+            <ng-template #actionsTemplate let-row>
+                <ng-container>
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu"
+                        (click)="$event.stopPropagation()">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                        <button mat-menu-item (click)="openUserProfileDialog(row)">
+                            <mat-icon>remove_red_eye</mat-icon>
+                            View
+                        </button>
+                        <button mat-menu-item (click)="openUpdateDialog(row)">
+                            <mat-icon>edit</mat-icon>
+                            Edit
+                        </button>
+
+                        <button mat-menu-item (click)="delete(row)">
+                            <span fxLayoutAlign="start center"><mat-icon>delete</mat-icon><span>Delete</span></span>
+                        </button>
+                          <button mat-menu-item (click)="openAddMediaDialog('VIDEO',row.id)">
+                            <span fxLayoutAlign="start center"><mat-icon>music_video</mat-icon><span>Add Video</span></span>
+                        </button>
+                          <button mat-menu-item  (click)="openAddMediaDialog('IMAGE',row.id)">
+                            <span fxLayoutAlign="start center"><mat-icon>image</mat-icon><span>Add Image</span></span>
+                        </button>
+                    </mat-menu>
+                </ng-container>
+            </ng-template>
+          
+            <shared-data-table [columns]="displayedColumns" [data]="castList" [usePaginator]="true" [pageSize]="size"
+                [pageSizeOptions]="pageSizeList" [totalRecords]="recordCount" (pageChange)="onPageChange($event)">
+            </shared-data-table>
+        </fury-card-content>
+    </fury-page-layout-content>
+
+</fury-page-layout>

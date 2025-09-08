@@ -1,0 +1,102 @@
+<h2 mat-dialog-title>{{ data.type === 'IMAGE' ? 'Add Image' : 'Add Video' }}</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="castForm" class="cast-form">
+
+    <!-- Caption Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Caption</mat-label>
+      <input matInput formControlName="caption" placeholder="Enter caption">
+      <mat-error *ngIf="castForm.get('caption')?.hasError('required')">
+        Caption is required
+      </mat-error>
+      <mat-error *ngIf="castForm.get('caption')?.hasError('minlength')">
+        Caption must be at least 3 characters
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Thumbnail Upload -->
+    <div class="image-upload-card">
+      <p class="image-label">Thumbnail</p>
+      <input type="file" 
+             id="thumbnailInput" 
+             accept=".jpg,.jpeg,.png" 
+             hidden
+             (change)="onFileChange($event, 'thumbnail')">
+
+      <div class="image-preview-container"
+           (click)="triggerFileInput('thumbnailInput')"
+           [class.has-image]="thumbnailPreview">
+        <div *ngIf="thumbnailPreview; else noThumbTemplate">
+          <img [src]="thumbnailPreview" alt="Thumbnail preview" class="preview-image">
+          <div class="image-overlay"><mat-icon>camera_alt</mat-icon> Change</div>
+        </div>
+        <ng-template #noThumbTemplate>
+          <div class="upload-placeholder">
+            <mat-icon>add_photo_alternate</mat-icon>
+            <span>Upload Thumbnail</span>
+            <p>JPG, JPEG, PNG | Max 2MB</p>
+          </div>
+        </ng-template>
+      </div>
+      <button *ngIf="thumbnailPreview" mat-button color="warn"
+              (click)="clearFile('thumbnail'); $event.stopPropagation()">
+        <mat-icon>delete</mat-icon> Remove
+      </button>
+    </div>
+
+    <!-- File Upload (Photo / Video) -->
+    <div class="image-upload-card">
+      <p class="image-label">{{ data.type === 'IMAGE' ? 'Photo' : 'Video' }}</p>
+      <input type="file" 
+             id="fileInput" 
+             [accept]="data.type === 'IMAGE' ? '.jpg,.jpeg,.png' : 'video/mp4,video/webm,video/ogg'" 
+             hidden
+             (change)="onFileChange($event, 'file')">
+
+      <div class="image-preview-container"
+           (click)="triggerFileInput('fileInput')"
+           [class.has-image]="filePreview">
+
+        <!-- Preview -->
+        <div *ngIf="filePreview; else noFileTemplate">
+          <!-- Image Preview -->
+          <img *ngIf="data.type === 'IMAGE'" [src]="filePreview" alt="Photo preview" class="preview-image">
+
+          <!-- Video Preview -->
+          <video *ngIf="data.type === 'VIDEO'" [src]="filePreview" class="preview-image" controls></video>
+
+          <div class="image-overlay">
+            <mat-icon>camera_alt</mat-icon> Change
+          </div>
+        </div>
+
+        <!-- Placeholder -->
+        <ng-template #noFileTemplate>
+          <div class="upload-placeholder">
+            <mat-icon>add_photo_alternate</mat-icon>
+            <span>Upload {{ data.type === 'IMAGE' ? 'Photo' : 'Video' }}</span>
+            <p *ngIf="data.type === 'IMAGE'">JPG, JPEG, PNG | Max 2MB</p>
+            <p *ngIf="data.type === 'VIDEO'">MP4, WebM, OGG | Max 10MB</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Remove Button -->
+      <button *ngIf="filePreview" mat-button color="warn"
+              (click)="clearFile('file'); $event.stopPropagation()">
+        <mat-icon>delete</mat-icon> Remove
+      </button>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="close()">Cancel</button>
+  <button mat-flat-button color="primary"
+          (click)="onSubmit()"
+          [disabled]="castForm.invalid">
+    {{ data.type === 'IMAGE' ? 'Upload Image' : 'Upload Video' }}
+  </button>
+</mat-dialog-actions>

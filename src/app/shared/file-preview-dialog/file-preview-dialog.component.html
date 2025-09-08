@@ -1,0 +1,24 @@
+<mat-dialog-content class="dialog-container">
+  <h2 class="dialog-title">{{ data.title }}</h2>
+
+  <!-- Thumbnail -->
+  <div class="thumbnail-wrapper" *ngIf="data.thumbnail">
+    <img [src]="data.thumbnail" alt="Thumbnail" class="thumbnail" />
+  </div>
+
+  <!-- Dynamic File Preview -->
+  <div class="file-preview">
+    <!-- Image -->
+    <img *ngIf="data.fileType === 'image'" [src]="data.fileUrl" alt="Preview" class="preview-image" />
+
+    <!-- Video -->
+    <video *ngIf="data.fileType === 'video'" [src]="data.fileUrl" controls class="preview-video"></video>
+
+    <!-- Audio -->
+    <audio *ngIf="data.fileType === 'audio'" [src]="data.fileUrl" controls class="preview-audio"></audio>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>

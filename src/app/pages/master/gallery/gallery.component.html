@@ -1,0 +1,74 @@
+<fury-page-layout mode="card" style="padding-top: 16px;">
+    <fury-page-layout-content>
+        <fury-card-content>
+
+            <div style="margin-top: 16px;" fxLayout="row" fxLayoutAlign="space-between center">
+                <form [formGroup]="form" class="filter-container" fxLayout="row wrap" fxLayoutGap="16px"
+                    fxLayoutAlign="start center">
+
+                    <!-- Search Input -->
+                    <div>
+                        <mat-form-field appearance="outline" fxFlex.xs="100%" fxFlex.sm="45%" fxFlex.md="30%">
+                            <mat-label>Search</mat-label>
+                            <input matInput formControlName="key" placeholder="Search...">
+                        </mat-form-field>
+                    </div>
+       
+                 
+
+
+
+                </form>
+                <div>
+                    <button (click)="openCreateDialog()" type="button" mat-mini-fab color="primary">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+            </div>
+            <ng-template #firstPosTemplate let-row let-i="index">
+                {{ i + 1 + (page * size) }}.
+            </ng-template>
+            <ng-template #actionsTemplate let-row>
+                <ng-container>
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu"
+                        (click)="$event.stopPropagation()">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+
+                    <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                        <button mat-menu-item (click)="openPreview(row)">
+                            <mat-icon>remove_red_eye</mat-icon>
+                            View
+                        </button>
+                        <button mat-menu-item (click)="openUpdateDialog(row)">
+                            <mat-icon>edit</mat-icon>
+                            Edit
+                        </button>
+
+                        <button mat-menu-item (click)="delete(row)">
+                           
+                            <span fxLayoutAlign="start center"
+                                ><mat-icon>delete</mat-icon><span>Delete</span></span>
+                        </button>
+                    </mat-menu>
+                </ng-container>
+            </ng-template>
+            <!-- Expansion Template -->
+            <ng-template #imageTemplate let-row style="justify-items: center;">
+               
+               
+<img [src]="baseUrl + row.thumbnail"
+           alt="item image"
+           width="50"
+           height="50"
+           style="border-radius: 8px;" />
+            </ng-template>
+            <shared-data-table noDataLabel="No Gallery image found" [columns]="displayedColumns" [data]="mediaList" [usePaginator]="true"
+                [pageSize]="size" [pageSizeOptions]="pageSizeList" [totalRecords]="recordCount"
+                (pageChange)="onPageChange($event)">
+            </shared-data-table>
+        </fury-card-content>
+    </fury-page-layout-content>
+
+</fury-page-layout>

@@ -1,0 +1,16 @@
+export class SidenavItem {
+  name: string;
+  icon?: string;
+  img?: string;
+  routeOrFunction?: any;
+  parent?: SidenavItem;
+  subItems?: SidenavItem[];
+  position?: number;
+  pathMatchExact?: boolean;
+  badge?: string;
+  badgeColor?: string;
+  type?: "item" | "subheading";
+  subItem?: true | false;
+  customClass?: string;
+  permissionCode?: string | string[];
+}

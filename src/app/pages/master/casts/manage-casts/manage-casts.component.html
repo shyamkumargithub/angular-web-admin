@@ -1,0 +1,136 @@
+<h2 mat-dialog-title>{{ data.action=='UPDATE' ? 'Update Cast Member' : 'Add New Cast Member' }}</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="castForm" class="cast-form">
+    
+    <!-- Username Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="Enter username">
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="castForm.get('username')?.hasError('required')">
+        Username is required
+      </mat-error>
+      <mat-error *ngIf="castForm.get('username')?.hasError('minlength')">
+        Username must be at least 3 characters
+      </mat-error>
+    </mat-form-field>
+
+    <!-- About Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>About</mat-label>
+      <textarea matInput formControlName="about" rows="4" 
+                placeholder="Tell us about this cast member" 
+                #aboutInput ></textarea>
+      <mat-hint align="end">{{ aboutInput.value?.length || 0 }}/250</mat-hint>
+      <mat-error *ngIf="castForm.get('about')?.hasError('required')">
+        About section is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Image Upload Section -->
+    <div class="image-upload-section">
+      <h3>Images</h3>
+      <p class="upload-hint">Upload thumbnail and photo</p>
+      
+      <div class="image-row">
+        <!-- Thumbnail Upload -->
+        <div class="image-upload-card">
+          <p class="image-label">Thumbnail</p>
+          <input type="file" id="thumbnailInput" accept=".jpg,.jpeg,.png" hidden
+                 (change)="onFileChange($event, 'thumbnail')">
+          
+          <div class="image-preview-container" 
+               (click)="triggerFileInput('thumbnailInput')"
+               [class.has-image]="thumbnailPreview">
+            
+            <!-- If Thumbnail Exists -->
+            <div *ngIf="thumbnailPreview; else noThumbTemplate" class="preview-wrapper">
+              <img [src]="thumbnailPreview" alt="Thumbnail preview" class="preview-image">
+              <div class="image-overlay">
+                <mat-icon>camera_alt</mat-icon>
+                <span>Change</span>
+              </div>
+            </div>
+
+            <!-- Placeholder with rules -->
+            <ng-template #noThumbTemplate>
+              <div class="upload-placeholder">
+                <mat-icon class="upload-icon">add_photo_alternate</mat-icon>
+                <span>Upload Thumbnail</span>
+                <p class="rules-text">JPG, JPEG, PNG | Max 2MB</p>
+              </div>
+            </ng-template>
+          </div>
+          
+          <div *ngIf="castForm.get('thumbnail')?.errors" class="error-message">
+            <span *ngIf="castForm.get('thumbnail')?.errors?.['fileType']">
+              Only JPG, JPEG, and PNG files are allowed
+            </span>
+            <span *ngIf="castForm.get('thumbnail')?.errors?.['fileSize']">
+              Maximum file size is 2MB
+            </span>
+          </div>
+          
+          <button *ngIf="thumbnailPreview" mat-button color="warn" 
+                  class="clear-btn" (click)="clearFile('thumbnail'); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon> Remove
+          </button>
+        </div>
+
+        <!-- Photo Upload -->
+        <div class="image-upload-card">
+          <p class="image-label">Photo</p>
+          <input type="file" id="photoInput" accept=".jpg,.jpeg,.png" hidden
+                 (change)="onFileChange($event, 'photo')">
+          
+          <div class="image-preview-container" 
+               (click)="triggerFileInput('photoInput')"
+               [class.has-image]="photoPreview">
+            
+            <!-- If Photo Exists -->
+            <div *ngIf="photoPreview; else noPhotoTemplate" class="preview-wrapper">
+              <img [src]="photoPreview" alt="Photo preview" class="preview-image">
+              <div class="image-overlay">
+                <mat-icon>camera_alt</mat-icon>
+                <span>Change</span>
+              </div>
+            </div>
+
+            <!-- Placeholder with rules -->
+            <ng-template #noPhotoTemplate>
+              <div class="upload-placeholder">
+                <mat-icon class="upload-icon">add_photo_alternate</mat-icon>
+                <span>Upload Photo</span>
+                <p class="rules-text">JPG, JPEG, PNG | Max 2MB</p>
+              </div>
+            </ng-template>
+          </div>
+          
+          <div *ngIf="castForm.get('photo')?.errors" class="error-message">
+            <span *ngIf="castForm.get('photo')?.errors?.['fileType']">
+              Only JPG, JPEG, and PNG files are allowed
+            </span>
+            <span *ngIf="castForm.get('photo')?.errors?.['fileSize']">
+              Maximum file size is 2MB
+            </span>
+          </div>
+          
+          <button *ngIf="photoPreview" mat-button color="warn" 
+                  class="clear-btn" (click)="clearFile('photo'); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon> Remove
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button color="basic" (click)="close()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" 
+          [disabled]="castForm.invalid || (!castForm.dirty && !data?.payload?.id)">
+    {{ data.action=='UPDATE' ? 'Update' : 'Create' }}
+  </button>
+</mat-dialog-actions>

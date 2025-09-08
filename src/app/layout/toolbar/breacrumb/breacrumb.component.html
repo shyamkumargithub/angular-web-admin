@@ -1,0 +1,32 @@
+<div style="width: auto;" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="crumbs" fxFlex="1 1 100%" fxLayout="row" fxLayoutAlign="start center">
+    <!-- Home Breadcrumb -->
+    <a [routerLink]="['/']" class="crumb home link">Home</a>
+
+    <!-- Dynamic Breadcrumbs -->
+    <ng-container *ngFor="let breadcrumb of breadcrumbs">
+      <!-- If label is an array, loop through it -->
+      <ng-container *ngIf="isArray(breadcrumb.label); else singleLabel">
+        <ng-container *ngFor="let subLabel of breadcrumb.label; let lastSub = last">
+          <div
+            class="crumb current"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            [ngClass]="{ last: lastSub }"
+          >
+            <mat-icon class="chevron">chevron_right</mat-icon>
+            <div class="link">{{ subLabel }}</div>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <!-- If label is a single string -->
+      <ng-template #singleLabel>
+        <div class="crumb current" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="chevron">chevron_right</mat-icon>
+          <div class="link">{{ breadcrumb.label }}</div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

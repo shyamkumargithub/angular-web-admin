@@ -1,0 +1,21 @@
+.card-container {
+  position: fixed; /* Change from absolute to fixed */
+  top: auto; /* Ensure it doesn't break positioning */
+  left: auto;
+  z-index: 1000;
+  width: 500px; /* Adjust width if needed */
+  max-height: 300px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+/* Ensure scrolling */
+.scrollable-card {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+}

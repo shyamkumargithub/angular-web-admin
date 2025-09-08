@@ -1,0 +1,76 @@
+<mat-dialog-content class="dialog-container">
+
+  <!-- Full Width Media Card -->
+  <mat-card class="media-card mat-elevation-z6">
+    <h2 class="media-title">{{ data.title }}</h2>
+
+    <!-- Media -->
+    <div class="media-wrapper">
+
+      <!-- Image -->
+      <div class="media-loader" *ngIf="data.fileType === 'image'">
+        <mat-progress-spinner
+          *ngIf="!imageLoaded"
+          mode="indeterminate"
+          diameter="40"
+          class="spinner"
+        ></mat-progress-spinner>
+
+        <img
+          [src]="data.fileUrl"
+          alt="Preview"
+          class="media-image"
+          (load)="imageLoaded = true"
+          (error)="imageLoaded = true"
+          [class.hidden]="!imageLoaded"
+        />
+      </div>
+
+      <!-- Video -->
+      <div class="media-loader" *ngIf="data.fileType === 'video'">
+        <mat-progress-spinner
+          *ngIf="!videoLoaded"
+          mode="indeterminate"
+          diameter="40"
+          class="spinner"
+        ></mat-progress-spinner>
+
+        <video
+          [src]="data.fileUrl"
+          controls
+          class="media-video"
+          (loadeddata)="videoLoaded = true"
+          (error)="videoLoaded = true"
+          [class.hidden]="!videoLoaded"
+        ></video>
+      </div>
+
+      <!-- Audio -->
+      <div class="media-loader" *ngIf="data.fileType === 'audio'">
+        <mat-progress-spinner
+          *ngIf="!audioLoaded"
+          mode="indeterminate"
+          diameter="40"
+          class="spinner"
+        ></mat-progress-spinner>
+
+        <div class="audio-wrapper" [class.hidden]="!audioLoaded">
+          <mat-icon class="audio-icon">audiotrack</mat-icon>
+          <audio
+            [src]="data.fileUrl"
+            controls
+            class="media-audio"
+            (loadedmetadata)="audioLoaded = true"
+            (error)="audioLoaded = true"
+          ></audio>
+        </div>
+      </div>
+
+    </div>
+  </mat-card>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button color="primary" (click)="close()">Close</button>
+</mat-dialog-actions>
