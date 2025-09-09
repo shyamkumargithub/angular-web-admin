@@ -118,15 +118,15 @@ export class ManageCastsComponent {
   if (this.castForm.value.photo instanceof File) {
    formData.append("profile.file", this.castForm.value.photo);
   }
-    if (this.castForm.value.photo instanceof File || this.castForm.value.thumbnail instanceof File) {
-       formData.append('profile.id', this.data?.payload?.profile.id.toString());
-    }
+    // if (this.castForm.value.photo instanceof File || this.castForm.value.thumbnail instanceof File) {
+    //    formData.append('profile.id', this.data?.payload?.profile.id.toString());
+    // }
 formData.forEach((value, key) => {
   console.log(key, value);
 });
   // Handle update
   if (this.data?.action === 'UPDATE') {
-   
+    formData.append('profile.id', this.data?.payload?.profile.id.toString());
     this.updateActor(this.data.payload.id, formData);
   } else {
     this.createActor(formData);

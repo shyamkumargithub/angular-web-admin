@@ -48,6 +48,29 @@ export class MasterService {
       }
     );
   }
+   updateVideo(id: string, formData: FormData): Observable<Media> {
+    return this.http.put<Media>(
+      environment.server + `/private/media/update/video/${id}`,
+      formData,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem(environment.access_token),
+        }),
+      }
+    );
+  }
+
+  uploadVideo(formData: FormData): Observable<Media> {
+    return this.http.post<Media>(
+      environment.server + `/private/media/upload/video`,
+      formData,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem(environment.access_token),
+        }),
+      }
+    );
+  }
 
     uploadMusicApi(formData: FormData): Observable<Media> {
     return this.http.post<Media>(

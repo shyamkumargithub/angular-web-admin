@@ -5,6 +5,7 @@ import { GalleryComponent } from "./gallery/gallery.component";
 import { CastsComponent } from "./casts/casts.component";
 import { MusicComponent } from "./music/music.component";
 import { QuestionComponent } from "./question/question.component";
+import { MusicVideoComponent } from "./music-video/music-video.component";
 
 
 const routes: Routes = [
@@ -22,6 +23,11 @@ const routes: Routes = [
     path: "music",
     component: MusicComponent,
     data: { breadcrumb: "Music" },
+  },
+    {
+    path: "music-video",
+    component: MusicVideoComponent,
+    data: { breadcrumb: "Music Video" },
   },
     {
     path: "question",

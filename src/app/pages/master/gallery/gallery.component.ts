@@ -21,7 +21,7 @@ import { debounceTime } from "rxjs";
 import { DeleteDailogComponent } from "src/app/shared/delete-dailog/delete-dailog.component";
 import { ModalData } from "src/app/interface/DeleteModalData";
 
-import { Attribute } from "src/app/interface/attribute.interface";
+
 import { ManageGalleryDialogComponent } from "./manage-gallery-dialog/manage-gallery-dialog.component";
 import { Media } from "src/app/interface/Media";
 import { environment } from "src/environments/environment";
@@ -82,7 +82,7 @@ export class GalleryComponent {
 
     this.form = this.fb.group({
       key: [""],
-      category: ["true"],
+      category: [""],
     });
 
     this.form.valueChanges
@@ -112,6 +112,12 @@ export class GalleryComponent {
       this.form.get("key")?.value != ""
     ) {
       params.key = this.form.get("key")?.value;
+    }
+       if (
+      this.form.get("category")?.value != undefined &&
+      this.form.get("category")?.value != ""
+    ) {
+      params.categories = this.form.get("category")?.value;
     }
    
 

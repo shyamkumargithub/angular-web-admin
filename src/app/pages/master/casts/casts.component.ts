@@ -21,7 +21,7 @@ import { debounceTime } from "rxjs";
 import { DeleteDailogComponent } from "src/app/shared/delete-dailog/delete-dailog.component";
 import { ModalData } from "src/app/interface/DeleteModalData";
 
-import { Attribute } from "src/app/interface/attribute.interface";
+
 import { Actor } from "src/app/interface/Actor";
 import { CastFormData, ManageCastsComponent } from "./manage-casts/manage-casts.component";
 import { environment } from "src/environments/environment";

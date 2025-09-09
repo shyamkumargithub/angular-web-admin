@@ -31,6 +31,14 @@ export const ROOT_LAYOUT_DATA: SidenavItem[] = [
         type: "item",
         permissionCode: "",
       },
+      {
+        name: "Music Video",
+        routeOrFunction: "/master/music-video",
+        position: 25,
+        icon:"video_library",
+        type: "item",
+        permissionCode: "",
+      },
         {
         name: "Gallery",
         routeOrFunction: "/master/gallery",

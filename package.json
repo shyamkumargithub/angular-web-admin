@@ -1,10 +1,11 @@
 {
   "name": "fury",
   "version": "16.0.0",
-  "scripts": {
+"scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --configuration production",
+    "start": "set NODE_OPTIONS=--max_old_space_size=4096 && ng serve",
+    "build-stg": "set NODE_OPTIONS=--max_old_space_size=4096 && ng build --configuration staging",
+    "build-prod": "set NODE_OPTIONS=--max_old_space_size=4096 && ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -24,6 +24,7 @@ import { MusicVideoComponent } from './music-video/music-video.component';
 import { ManageMusicVideoComponent } from './music-video/manage-music-video/manage-music-video.component';
 import { ViewGalleryDailogComponent } from './gallery/view-gallery-dailog/view-gallery-dailog.component';
 import { MatChipsModule } from "@angular/material/chips";
+import { ViewVideoDailogComponent } from './music-video/view-video-dailog/view-video-dailog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MatChipsModule } from "@angular/material/chips";
     UploadMediaComponent,
     MusicVideoComponent,
     ManageMusicVideoComponent,
-    ViewGalleryDailogComponent ],
+    ViewGalleryDailogComponent,
+    ViewVideoDailogComponent ],
   imports: [
     CommonModule,
     MasterRoutingModule,

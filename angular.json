@@ -23,18 +23,21 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles", "node_modules"]
+              "includePaths": [
+                "src/styles",
+                "node_modules"
+              ]
             },
             "assets": [
               "src/assets",
               "src/favicon.ico",
               "src/_redirects",
               "src/.htaccess"
+             
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
-             
             ],
             "scripts": [],
             "baseHref": "/",
@@ -97,7 +100,7 @@
                   "with": "src/environments/environment.stg.ts"
                 }
               ]
-            },
+            },            
             "analyze": {
               "budgets": [
                 {
@@ -141,7 +144,7 @@
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
-             
+            
             ],
             "assets": [
               "src/assets",

@@ -21,7 +21,7 @@ import { debounceTime } from "rxjs";
 import { DeleteDailogComponent } from "src/app/shared/delete-dailog/delete-dailog.component";
 import { ModalData } from "src/app/interface/DeleteModalData";
 
-import { Attribute } from "src/app/interface/attribute.interface";
+
 
 import { Media } from "src/app/interface/Media";
 import { environment } from "src/environments/environment";
