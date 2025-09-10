@@ -30,6 +30,11 @@
             },
             "assets": [
               "src/assets",
+               {
+        "glob": "**/*",
+        "input": "./node_modules/material-design-icons-iconfont/dist/fonts",
+        "output": "./assets/fonts"
+      },
               "src/favicon.ico",
               "src/_redirects",
               "src/.htaccess"
@@ -148,6 +153,11 @@
             ],
             "assets": [
               "src/assets",
+               {
+        "glob": "**/*",
+        "input": "./node_modules/material-design-icons-iconfont/dist/fonts",
+        "output": "./assets/fonts"
+      },
               "src/favicon.ico",
               "src/manifest.json",
               "src/manifest.json"

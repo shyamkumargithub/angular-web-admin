@@ -1,7 +1,7 @@
 {
   "name": "fury",
   "version": "16.0.0",
-"scripts": {
+  "scripts": {
     "ng": "ng",
     "start": "set NODE_OPTIONS=--max_old_space_size=4096 && ng serve",
     "build-stg": "set NODE_OPTIONS=--max_old_space_size=4096 && ng build --configuration staging",
@@ -30,6 +30,7 @@
     "chart.js": "^4.0.0",
     "highlight.js": "~11.3.1",
     "lodash-es": "~4.17.21",
+    "material-design-icons-iconfont": "^6.7.0",
     "moment": "~2.29.1",
     "ng2-charts": "~5.0.3",
     "ngx-quill": "~22.1.0",

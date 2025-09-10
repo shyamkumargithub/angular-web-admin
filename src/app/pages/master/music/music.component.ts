@@ -26,6 +26,7 @@ import { ModalData } from "src/app/interface/DeleteModalData";
 import { Media } from "src/app/interface/Media";
 import { environment } from "src/environments/environment";
 import { ManageMusicComponent } from "./manage-music/manage-music.component";
+import { ViewMusicDailogComponent } from "./view-music-dailog/view-music-dailog.component";
 
 @Component({
   selector: 'CoreLab-music',
@@ -231,6 +232,21 @@ export class MusicComponent {
           },
         });
       }
+    });
+  }
+
+   openPreview(row: Media) {
+    //console.log(">>>>>>>>>seleted media",row)
+    const fileData: any = {
+      title: row?.audioMetadata?.title,
+      fileUrl: this.baseUrl+row?.url,
+      fileType: 'audio'
+    };
+  
+    this.dialog.open(ViewMusicDailogComponent, {
+      data: fileData,
+      width: '600px',
+      panelClass: 'custom-dialog-container'
     });
   }
 }
