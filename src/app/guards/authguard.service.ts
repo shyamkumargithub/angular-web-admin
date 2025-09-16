@@ -7,8 +7,7 @@ import { environment } from 'src/environments/environment';
 import { SidenavService } from '../layout/sidenav/sidenav.service';
 import { ROOT_LAYOUT_DATA } from '../data/sidebar-data';
 import { DataService } from '../shared/services/data.service';
-import { AuthService } from '../shared/services/auth.service';
-import { User } from '../interface/user.interface';
+
 
 
 
@@ -22,26 +21,31 @@ export const canActivateAuthGuard: CanActivateFn = async (
   const router = inject(Router);
   const snackBar = inject(MatSnackBar);
   const dataService = inject(DataService);
-  const authService = inject(AuthService);
   const sidenavService = inject(SidenavService);
 
 
   try {
-   const user: User = JSON.parse(localStorage.getItem(environment.userInfo));
+   const user: any = JSON.parse(localStorage.getItem(environment.userInfo));
+  
     if ( user) {
      
       sidenavService.addItems(ROOT_LAYOUT_DATA);
        dataService.setUser(user);
-      
+      return true;
+    }else{
+       router.navigate(["/login"]);
+      return false;
     }
 
-    return true;
+    
   } catch (error: any) {
+     
     snackBar.open(  "Authentication failed", "Close", {
       duration: 5000,
     });
 
     localStorage.removeItem(environment.userInfo)
+     localStorage.removeItem(environment.access_token)
     dataService.setUser(undefined);
     router.navigate(["/login"]);
     return false;

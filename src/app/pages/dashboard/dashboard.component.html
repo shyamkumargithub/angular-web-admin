@@ -1,29 +1,57 @@
-<!-- dashboard.component.html -->
 <div class="dashboard-container mat-elevation-z2">
 
   <!-- Hero Section -->
   <mat-card class="hero-card">
     <div class="hero-content">
-      <img  src="assets/profile.png"
+      <img src="assets/profile.png"
            alt="Bhupen Hazarika" class="hero-img" />
 
       <div class="hero-text">
         <h1>Bhupen Hazarika</h1>
         <p>
           Bhupen Hazarika was a legendary Indian playback singer, lyricist, musician, singer, poet, and filmmaker 
-          from Assam. Known as the “Bard of Brahmaputra”, his songs often highlight humanity, harmony, and justice.
+          from Assam. Known as the "Bard of Brahmaputra", his songs often highlight humanity, harmony, and justice.
         </p>
       </div>
     </div>
   </mat-card>
 
   <!-- Stats Cards -->
-<div class="stats-grid">
-  <mat-card *ngFor="let stat of totalSongs"
-            class="stat-card mat-elevation-z4"
-            [ngClass]="stat.color">
-    <h2>{{ stat.total }}</h2>
-    <p>{{ stat.language }}</p>
-  </mat-card>
-</div>
+  <div class="stats-grid">
+    <mat-card *ngFor="let stat of totalSongs"
+              class="stat-card mat-elevation-z4"
+              [ngClass]="stat.color">
+      <h2>{{ stat.total }}</h2>
+      <p>{{ stat.language }}</p>
+    </mat-card>
+  </div>
+
+  <!-- Rating Cards -->
+  <div class="rating-section">
+    <h2 class="section-title">Feedback</h2>
+    <div class="stats-grid">
+      <!-- Average Rating Card -->
+      <mat-card class="rating-card average-rating mat-elevation-z4">
+        <div class="rating-content">
+          <p >Average Rating</p>
+          <h2>{{ averageRating  }}</h2>
+         
+          
+        </div>
+      </mat-card>
+
+      <!-- Individual Rating Cards -->
+      <mat-card *ngFor="let rating of ratingList" 
+                class="rating-card mat-elevation-z4"
+                [ngClass]="'rating-' + rating.ratingValue">
+        <div class="rating-content">
+          <div class="stars">
+            <span *ngFor="let star of getStars(rating?.ratingValue)">{{star}}</span>
+          </div>
+          <h2>{{ rating?.total }}</h2>
+        
+        </div>
+      </mat-card>
+    </div>
+  </div>
 </div>

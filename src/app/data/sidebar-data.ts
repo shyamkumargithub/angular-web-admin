@@ -9,7 +9,7 @@ export const ROOT_LAYOUT_DATA: SidenavItem[] = [
   },
   {
     name: "Dashboard",
-    routeOrFunction: "/",
+    routeOrFunction: "/dashboard",
     position: 10,
     icon: "receipt_long",
     type: "item",

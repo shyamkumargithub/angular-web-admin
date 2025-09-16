@@ -209,6 +209,28 @@ export class MasterService {
       }
     );
   }
+   getAllTotalRatings(): Observable<{ total: number; ratingValue: number }[]> {
+    return this.http.get<{ total: number; ratingValue: number }[]>(
+      `${environment.server}/private/ratings/counts`,
+      {
+       headers: new HttpHeaders({
+          Authorization: localStorage.getItem(environment.access_token),
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+   getAverageRating(): Observable<{ averageRating: number }> {
+    return this.http.get<{ averageRating: number }>(
+      `${environment.server}/private/ratings/average`,
+      {
+       headers: new HttpHeaders({
+          Authorization: localStorage.getItem(environment.access_token),
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
 
    getAllQuestionApi(
    params:any

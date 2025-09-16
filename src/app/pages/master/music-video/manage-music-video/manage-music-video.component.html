@@ -88,10 +88,10 @@
     <p class="file-name">{{getFileName(form.get('file')?.value)}}</p>
   </div>
   <div class="preview-actions">
-    <button mat-icon-button color="primary" (click)="fileInput.click()" matTooltip="Change file">
+    <button type="button" mat-icon-button color="primary" (click)="fileInput.click()" matTooltip="Change file">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button color="warn" (click)="removeFile()" matTooltip="Remove file">
+    <button type="button" mat-icon-button color="warn" (click)="removeFile()" matTooltip="Remove file">
       <mat-icon>delete</mat-icon>
     </button>
   </div>

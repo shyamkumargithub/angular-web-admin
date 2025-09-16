@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataService } from 'src/app/shared/services/data.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'fury-toolbar-user',
@@ -9,7 +12,7 @@ export class ToolbarUserComponent implements OnInit {
 
   isOpen: boolean;
 
-  constructor() { }
+  constructor(private router:Router,private dataService:DataService) { }
 
   ngOnInit() {
   }
@@ -20,6 +23,13 @@ export class ToolbarUserComponent implements OnInit {
 
   onClickOutside() {
     this.isOpen = false;
+  }
+  onClickLogout(){
+      localStorage.removeItem(environment.userInfo)
+        localStorage.removeItem(environment.access_token)
+    this.dataService.setUser(undefined);
+    this.router.navigate(["/login"]);
+
   }
 
 }

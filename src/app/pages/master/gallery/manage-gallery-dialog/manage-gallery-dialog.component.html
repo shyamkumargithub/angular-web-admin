@@ -41,10 +41,10 @@
             <div class="preview-area" *ngIf="thumbnailPreview || form.get('thumbnail')?.value">
                 <img [src]="thumbnailPreview || form.get('thumbnail')?.value" alt="Thumbnail preview" class="thumbnail-preview">
                 <div class="preview-actions">
-                    <button mat-icon-button color="primary" (click)="thumbnailInput.click()" matTooltip="Change thumbnail">
+                    <button type="button" mat-icon-button color="primary" (click)="thumbnailInput.click()" matTooltip="Change thumbnail">
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button color="warn" (click)="removeThumbnail()" matTooltip="Remove thumbnail">
+                    <button type="button" mat-icon-button color="warn" (click)="removeThumbnail()" matTooltip="Remove thumbnail">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>

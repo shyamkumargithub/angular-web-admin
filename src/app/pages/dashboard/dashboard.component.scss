@@ -1,4 +1,3 @@
-/* dashboard.component.scss */
 .dashboard-container {
   padding: 20px;
   display: flex;
@@ -66,4 +65,110 @@
 }
 .stat-card.warn {
   background: linear-gradient(135deg, #ff9800, #f44336);
+}
+
+.rating-section {
+  margin-top: 24px;
+}
+
+.section-title {
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.rating-card {
+  text-align: center;
+  padding: 20px;
+  border-radius: 16px;
+  transition: transform 0.3s;
+  color: white;
+  
+  .rating-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .rating-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .stars {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+  
+  h2 {
+    margin: 0;
+    font-size: 28px;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .rating-subtext {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+}
+
+.rating-card:hover {
+  transform: translateY(-6px);
+}
+
+.average-rating {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
+
+.rating-5 {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+}
+
+.rating-4 {
+  background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+}
+
+.rating-3 {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+}
+
+.rating-2 {
+  background: linear-gradient(135deg, #607d8b, #455a64);
+}
+
+.rating-1 {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
 }

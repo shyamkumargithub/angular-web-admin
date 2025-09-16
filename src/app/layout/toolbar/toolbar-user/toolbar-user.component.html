@@ -23,10 +23,10 @@
           <span>Help</span>
         </div>
         <mat-divider></mat-divider>
-        <div class="list-item" matRipple [routerLink]="['/login']">
+        <button class="list-item" matRipple (click)="onClickLogout()">
           <mat-icon class="list-item-icon">exit_to_app</mat-icon>
           <span>Logout</span>
-        </div>
+        </button>
       </div>
     </div>
   </div>

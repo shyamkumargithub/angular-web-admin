@@ -37,13 +37,7 @@ export class LoginComponent implements OnInit {
       password: ["", Validators.required],
     });
 
-   // const token = localStorage.getItem(environment.access_token);
-    const user: User = JSON.parse(localStorage.getItem(environment.userInfo));
-    if ( user) {
-     
-        this.router.navigate(["/"]);
-      
-    }
+  
   }
 
   onSubmit() {
@@ -65,9 +59,9 @@ export class LoginComponent implements OnInit {
           const username = this.form.get('username').value=='admin'; // Replace with actual username
         const password =this.form.get('password').value; // Replace with actual password
        const basicToken = btoa(`${username}:${password}`);
-
+     
        localStorage.setItem(environment.access_token,basicToken),
-       this.router.navigate(["/"]);
+        this.router.navigate(["/dashboard"]);
     }else{
        this.snackbar.open("Invalid credentials" ,"Close", {
           duration: 5000,
